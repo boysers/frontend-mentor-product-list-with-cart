@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+
+    <title>Frontend Mentor | Product list with cart</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="body">
+    <h1>Frontend Mentor | Product list with cart</h1>
+    <div class="container">
+      <section class="products">
+        <h2 class="products__title">Desserts</h2>
+
+        <ul class="products__list">
+          <!-- Product 1 -->
+          <li class="product-card">
+            <picture class="product-card__picture">
+              <source
+                media="(min-width: 900px)"
+                srcset="/assets/images/image-waffle-desktop.jpg"
+              />
+              <source
+                media="(min-width: 600px)"
+                srcset="/assets/images/image-waffle-tablet.jpg"
+              />
+              <img
+                class="product-card__image"
+                src="/assets/images/image-waffle-mobile.jpg"
+                alt="Waffle with Berries"
+              />
+            </picture>
+
+            <div class="product-card__content">
+              <p class="product-card__category">Waffle</p>
+              <h3 class="product-card__title">Waffle with Berries</h3>
+              <b class="product-card__price">6,50 €</b>
+            </div>
+
+            <div class="product-card__actions">
+              <button
+                type="button"
+                data-product-id="1"
+                class="product-card__add-btn"
+              >
+                <img
+                  src="/assets/images/icon-add-to-cart.svg"
+                  alt="Add to Cart"
+                />
+                Add to Cart
+              </button>
+
+              <div class="product-card__quantity-selector">
+                <button
+                  type="button"
+                  aria-label="Decrease quantity"
+                  data-product-id="1"
+                  class="product-card__quantity-btn product-card__quantity-btn--decrease"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="2"
+                    fill="none"
+                    viewBox="0 0 10 2"
+                  >
+                    <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+                  </svg>
+                </button>
+
+                <span class="product-card__quantity" data-product-quantity="1"
+                  >0</span
+                >
+
+                <button
+                  aria-label="Increase quantity"
+                  type="button"
+                  data-product-id="1"
+                  class="product-card__quantity-btn product-card__quantity-btn--increase"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    fill="none"
+                    viewBox="0 0 10 10"
+                  >
+                    <path
+                      fill="#fff"
+                      d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </li>
+
+          <!-- Product 2 -->
+          <li class="product-card">
+            <picture class="product-card__picture">
+              <source
+                media="(min-width: 900px)"
+                srcset="/assets/images/image-creme-brulee-desktop.jpg"
+              />
+              <source
+                media="(min-width: 600px)"
+                srcset="/assets/images/image-creme-brulee-tablet.jpg"
+              />
+              <img
+                class="product-card__image"
+                src="/assets/images/image-creme-brulee-mobile.jpg"
+                alt="Vanilla Bean Crème Brûlée"
+              />
+            </picture>
+
+            <div class="product-card__content">
+              <p class="product-card__category">Crème Brûlée</p>
+              <h3 class="product-card__title">Vanilla Bean Crème Brûlée</h3>
+              <b class="product-card__price">7,00 €</b>
+            </div>
+
+            <div class="product-card__actions">
+              <button
+                type="button"
+                data-product-id="2"
+                class="product-card__add-btn"
+              >
+                <img
+                  src="/assets/images/icon-add-to-cart.svg"
+                  alt="Add to Cart"
+                />
+                Add to Cart
+              </button>
+
+              <div class="product-card__quantity-selector">
+                <button
+                  type="button"
+                  aria-label="Decrease quantity"
+                  data-product-id="2"
+                  class="product-card__quantity-btn product-card__quantity-btn--decrease"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="2"
+                    fill="none"
+                    viewBox="0 0 10 2"
+                  >
+                    <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+                  </svg>
+                </button>
+
+                <span class="product-card__quantity" data-product-quantity="2"
+                  >0</span
+                >
+
+                <button
+                  aria-label="Increase quantity"
+                  type="button"
+                  data-product-id="2"
+                  class="product-card__quantity-btn product-card__quantity-btn--increase"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    fill="none"
+                    viewBox="0 0 10 10"
+                  >
+                    <path
+                      fill="#fff"
+                      d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </li>
+
+          <!-- Product 3 -->
+          <li class="product-card">
+            <picture class="product-card__picture">
+              <source
+                media="(min-width: 900px)"
+                srcset="/assets/images/image-macaron-desktop.jpg"
+              />
+              <source
+                media="(min-width: 600px)"
+                srcset="/assets/images/image-macaron-tablet.jpg"
+              />
+              <img
+                class="product-card__image"
+                src="/assets/images/image-macaron-mobile.jpg"
+                alt="Macaron Mix of Five"
+              />
+            </picture>
+
+            <div class="product-card__content">
+              <p class="product-card__category">Macaron</p>
+              <h3 class="product-card__title">Macaron Mix of Five</h3>
+              <b class="product-card__price">8,00 €</b>
+            </div>
+
+            <div class="product-card__actions">
+              <button
+                type="button"
+                data-product-id="3"
+                class="product-card__add-btn"
+              >
+                <img
+                  src="/assets/images/icon-add-to-cart.svg"
+                  alt="Add to Cart"
+                />
+                Add to Cart
+              </button>
+
+              <div class="product-card__quantity-selector">
+                <button
+                  type="button"
+                  aria-label="Decrease quantity"
+                  data-product-id="3"
+                  class="product-card__quantity-btn product-card__quantity-btn--decrease"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="2"
+                    fill="none"
+                    viewBox="0 0 10 2"
+                  >
+                    <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+                  </svg>
+                </button>
+
+                <span class="product-card__quantity" data-product-quantity="3"
+                  >0</span
+                >
+
+                <button
+                  aria-label="Increase quantity"
+                  type="button"
+                  data-product-id="3"
+                  class="product-card__quantity-btn product-card__quantity-btn--increase"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    fill="none"
+                    viewBox="0 0 10 10"
+                  >
+                    <path
+                      fill="#fff"
+                      d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </li>
+
+          <!-- Product 4 -->
+          <li class="product-card">
+            <picture class="product-card__picture">
+              <source
+                media="(min-width: 900px)"
+                srcset="/assets/images/image-tiramisu-desktop.jpg"
+              />
+              <source
+                media="(min-width: 600px)"
+                srcset="/assets/images/image-tiramisu-tablet.jpg"
+              />
+              <img
+                class="product-card__image"
+                src="/assets/images/image-tiramisu-mobile.jpg"
+                alt="Classic Tiramisu"
+              />
+            </picture>
+
+            <div class="product-card__content">
+              <p class="product-card__category">Tiramisu</p>
+              <h3 class="product-card__title">Classic Tiramisu</h3>
+              <b class="product-card__price">5,50 €</b>
+            </div>
+
+            <div class="product-card__actions">
+              <button
+                type="button"
+                data-product-id="4"
+                class="product-card__add-btn"
+              >
+                <img
+                  src="/assets/images/icon-add-to-cart.svg"
+                  alt="Add to Cart"
+                />
+                Add to Cart
+              </button>
+
+              <div class="product-card__quantity-selector">
+                <button
+                  type="button"
+                  aria-label="Decrease quantity"
+                  data-product-id="4"
+                  class="product-card__quantity-btn product-card__quantity-btn--decrease"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="2"
+                    fill="none"
+                    viewBox="0 0 10 2"
+                  >
+                    <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+                  </svg>
+                </button>
+
+                <span class="product-card__quantity" data-product-quantity="4"
+                  >0</span
+                >
+
+                <button
+                  aria-label="Increase quantity"
+                  type="button"
+                  data-product-id="4"
+                  class="product-card__quantity-btn product-card__quantity-btn--increase"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    fill="none"
+                    viewBox="0 0 10 10"
+                  >
+                    <path
+                      fill="#fff"
+                      d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </li>
+
+          <!-- Product 5 -->
+          <li class="product-card">
+            <picture class="product-card__picture">
+              <source
+                media="(min-width: 900px)"
+                srcset="/assets/images/image-baklava-desktop.jpg"
+              />
+              <source
+                media="(min-width: 600px)"
+                srcset="/assets/images/image-baklava-tablet.jpg"
+              />
+              <img
+                class="product-card__image"
+                src="/assets/images/image-baklava-mobile.jpg"
+                alt="Pistachio Baklava"
+              />
+            </picture>
+
+            <div class="product-card__content">
+              <p class="product-card__category">Baklava</p>
+              <h3 class="product-card__title">Pistachio Baklava</h3>
+              <b class="product-card__price">4,00 €</b>
+            </div>
+
+            <div class="product-card__actions">
+              <button
+                type="button"
+                data-product-id="5"
+                class="product-card__add-btn"
+              >
+                <img
+                  src="/assets/images/icon-add-to-cart.svg"
+                  alt="Add to Cart"
+                />
+                Add to Cart
+              </button>
+
+              <div class="product-card__quantity-selector">
+                <button
+                  type="button"
+                  aria-label="Decrease quantity"
+                  data-product-id="5"
+                  class="product-card__quantity-btn product-card__quantity-btn--decrease"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="2"
+                    fill="none"
+                    viewBox="0 0 10 2"
+                  >
+                    <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+                  </svg>
+                </button>
+
+                <span class="product-card__quantity" data-product-quantity="5"
+                  >0</span
+                >
+
+                <button
+                  aria-label="Increase quantity"
+                  type="button"
+                  data-product-id="5"
+                  class="product-card__quantity-btn product-card__quantity-btn--increase"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    fill="none"
+                    viewBox="0 0 10 10"
+                  >
+                    <path
+                      fill="#fff"
+                      d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </li>
+
+          <!-- Product 6 -->
+          <li class="product-card">
+            <picture class="product-card__picture">
+              <source
+                media="(min-width: 900px)"
+                srcset="/assets/images/image-meringue-desktop.jpg"
+              />
+              <source
+                media="(min-width: 600px)"
+                srcset="/assets/images/image-meringue-tablet.jpg"
+              />
+              <img
+                class="product-card__image"
+                src="/assets/images/image-meringue-mobile.jpg"
+                alt="Lemon Meringue Pie"
+              />
+            </picture>
+
+            <div class="product-card__content">
+              <p class="product-card__category">Pie</p>
+              <h3 class="product-card__title">Lemon Meringue Pie</h3>
+              <b class="product-card__price">5,00 €</b>
+            </div>
+
+            <div class="product-card__actions">
+              <button
+                type="button"
+                data-product-id="6"
+                class="product-card__add-btn"
+              >
+                <img
+                  src="/assets/images/icon-add-to-cart.svg"
+                  alt="Add to Cart"
+                />
+                Add to Cart
+              </button>
+
+              <div class="product-card__quantity-selector">
+                <button
+                  type="button"
+                  aria-label="Decrease quantity"
+                  data-product-id="6"
+                  class="product-card__quantity-btn product-card__quantity-btn--decrease"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="2"
+                    fill="none"
+                    viewBox="0 0 10 2"
+                  >
+                    <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+                  </svg>
+                </button>
+
+                <span class="product-card__quantity" data-product-quantity="6"
+                  >0</span
+                >
+
+                <button
+                  aria-label="Increase quantity"
+                  type="button"
+                  data-product-id="6"
+                  class="product-card__quantity-btn product-card__quantity-btn--increase"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    fill="none"
+                    viewBox="0 0 10 10"
+                  >
+                    <path
+                      fill="#fff"
+                      d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </li>
+
+          <!-- Product 7 -->
+          <li class="product-card">
+            <picture class="product-card__picture">
+              <source
+                media="(min-width: 900px)"
+                srcset="/assets/images/image-cake-desktop.jpg"
+              />
+              <source
+                media="(min-width: 600px)"
+                srcset="/assets/images/image-cake-tablet.jpg"
+              />
+              <img
+                class="product-card__image"
+                src="/assets/images/image-cake-mobile.jpg"
+                alt="Red Velvet Cake"
+              />
+            </picture>
+
+            <div class="product-card__content">
+              <p class="product-card__category">Cake</p>
+              <h3 class="product-card__title">Red Velvet Cake</h3>
+              <b class="product-card__price">4,50 €</b>
+            </div>
+
+            <div class="product-card__actions">
+              <button
+                type="button"
+                data-product-id="7"
+                class="product-card__add-btn"
+              >
+                <img
+                  src="/assets/images/icon-add-to-cart.svg"
+                  alt="Add to Cart"
+                />
+                Add to Cart
+              </button>
+
+              <div class="product-card__quantity-selector">
+                <button
+                  type="button"
+                  aria-label="Decrease quantity"
+                  data-product-id="7"
+                  class="product-card__quantity-btn product-card__quantity-btn--decrease"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="2"
+                    fill="none"
+                    viewBox="0 0 10 2"
+                  >
+                    <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+                  </svg>
+                </button>
+
+                <span class="product-card__quantity" data-product-quantity="7"
+                  >0</span
+                >
+
+                <button
+                  aria-label="Increase quantity"
+                  type="button"
+                  data-product-id="7"
+                  class="product-card__quantity-btn product-card__quantity-btn--increase"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    fill="none"
+                    viewBox="0 0 10 10"
+                  >
+                    <path
+                      fill="#fff"
+                      d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </li>
+
+          <!-- Product 8 -->
+          <li class="product-card">
+            <picture class="product-card__picture">
+              <source
+                media="(min-width: 900px)"
+                srcset="/assets/images/image-brownie-desktop.jpg"
+              />
+              <source
+                media="(min-width: 600px)"
+                srcset="/assets/images/image-brownie-tablet.jpg"
+              />
+              <img
+                class="product-card__image"
+                src="/assets/images/image-brownie-mobile.jpg"
+                alt="Salted Caramel Brownie"
+              />
+            </picture>
+
+            <div class="product-card__content">
+              <p class="product-card__category">Brownie</p>
+              <h3 class="product-card__title">Salted Caramel Brownie</h3>
+              <b class="product-card__price">4,50 €</b>
+            </div>
+
+            <div class="product-card__actions">
+              <button
+                type="button"
+                data-product-id="8"
+                class="product-card__add-btn"
+              >
+                <img
+                  src="/assets/images/icon-add-to-cart.svg"
+                  alt="Add to Cart"
+                />
+                Add to Cart
+              </button>
+
+              <div class="product-card__quantity-selector">
+                <button
+                  type="button"
+                  aria-label="Decrease quantity"
+                  data-product-id="8"
+                  class="product-card__quantity-btn product-card__quantity-btn--decrease"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="2"
+                    fill="none"
+                    viewBox="0 0 10 2"
+                  >
+                    <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+                  </svg>
+                </button>
+
+                <span class="product-card__quantity" data-product-quantity="8"
+                  >0</span
+                >
+
+                <button
+                  aria-label="Increase quantity"
+                  type="button"
+                  data-product-id="8"
+                  class="product-card__quantity-btn product-card__quantity-btn--increase"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    fill="none"
+                    viewBox="0 0 10 10"
+                  >
+                    <path
+                      fill="#fff"
+                      d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </li>
+
+          <!-- Product 9 -->
+          <li class="product-card">
+            <picture class="product-card__picture">
+              <source
+                media="(min-width: 900px)"
+                srcset="/assets/images/image-panna-cotta-desktop.jpg"
+              />
+              <source
+                media="(min-width: 600px)"
+                srcset="/assets/images/image-panna-cotta-tablet.jpg"
+              />
+              <img
+                class="product-card__image"
+                src="/assets/images/image-panna-cotta-mobile.jpg"
+                alt="Vanilla Panna Cotta"
+              />
+            </picture>
+
+            <div class="product-card__content">
+              <p class="product-card__category">Panna Cotta</p>
+              <h3 class="product-card__title">Vanilla Panna Cotta</h3>
+              <b class="product-card__price">6,50 €</b>
+            </div>
+
+            <div class="product-card__actions">
+              <button
+                type="button"
+                data-product-id="9"
+                class="product-card__add-btn"
+              >
+                <img
+                  src="/assets/images/icon-add-to-cart.svg"
+                  alt="Add to Cart"
+                />
+                Add to Cart
+              </button>
+
+              <div class="product-card__quantity-selector">
+                <button
+                  type="button"
+                  aria-label="Decrease quantity"
+                  data-product-id="9"
+                  class="product-card__quantity-btn product-card__quantity-btn--decrease"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="2"
+                    fill="none"
+                    viewBox="0 0 10 2"
+                  >
+                    <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+                  </svg>
+                </button>
+
+                <span class="product-card__quantity" data-product-quantity="9"
+                  >0</span
+                >
+
+                <button
+                  aria-label="Increase quantity"
+                  type="button"
+                  data-product-id="9"
+                  class="product-card__quantity-btn product-card__quantity-btn--increase"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    fill="none"
+                    viewBox="0 0 10 10"
+                  >
+                    <path
+                      fill="#fff"
+                      d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <aside id="shopping-cart" class="shopping-cart cart">
+        <h2 class="cart__title">Your Cart (0)</h2>
+        <div class="cart__empty-cart__container">
+          <img
+            class="cart__empty-cart__image"
+            src="/assets/images/illustration-empty-cart.svg"
+            alt="illustration emty cart"
+          />
+          <p class="cart__empty-cart__label">
+            Your added items will appear here
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <div id="modal" class="order-modal"></div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
