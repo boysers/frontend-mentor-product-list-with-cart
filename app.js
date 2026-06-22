@@ -149,7 +149,7 @@ const renderShoppingCart = () => {
         { classList: ["cart__empty-cart__container"] },
         createEl("img", {
           classList: ["cart__empty-cart__image"],
-          src: "/assets/images/illustration-empty-cart.svg",
+          src: "./assets/images/illustration-empty-cart.svg",
           alt: "illustration empty cart",
         }),
         createEl("p", {
@@ -243,7 +243,7 @@ const renderOrderConfirmed = () => {
         "li",
         { classList: ["order-item"] },
         createEl("img", {
-          src: `assets/images/${product.image.thumbnail}`,
+          src: `./assets/images/${product.image.thumbnail}`,
           alt: product.name,
           classList: ["order-item__image"],
         }),
@@ -280,7 +280,7 @@ const renderOrderConfirmed = () => {
         "div",
         { classList: ["order-modal__content"] },
         createEl("img", {
-          src: "/assets/images/icon-order-confirmed.svg",
+          src: "./assets/images/icon-order-confirmed.svg",
           alt: "icon order confirmed",
           classList: ["order-modal__icon"],
         }),
