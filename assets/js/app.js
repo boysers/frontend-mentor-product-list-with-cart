@@ -1,86 +1,10 @@
-const products = [
-  {
-    id: 1,
-    name: "Waffle with Berries",
-    description: "Waffle",
-    price: 6.5,
-    image: {
-      thumbnail: "image-waffle-thumbnail.jpg",
-    },
-  },
-  {
-    id: 2,
-    name: "Vanilla Bean Crème Brûlée",
-    description: "Crème Brûlée",
-    price: 7.0,
-    image: {
-      thumbnail: "image-creme-brulee-thumbnail.jpg",
-    },
-  },
-  {
-    id: 3,
-    name: "Macaron Mix of Five",
-    description: "Macaron",
-    price: 8.0,
-    image: {
-      thumbnail: "image-macaron-thumbnail.jpg",
-    },
-  },
-  {
-    id: 4,
-    name: "Classic Tiramisu",
-    description: "Tiramisu",
-    price: 5.5,
-    image: {
-      thumbnail: "image-tiramisu-thumbnail.jpg",
-    },
-  },
-  {
-    id: 5,
-    name: "Pistachio Baklava",
-    description: "Baklava",
-    price: 4.0,
-    image: {
-      thumbnail: "image-baklava-thumbnail.jpg",
-    },
-  },
-  {
-    id: 6,
-    name: "Lemon Meringue Pie",
-    description: "Pie",
-    price: 5.0,
-    image: {
-      thumbnail: "image-meringue-thumbnail.jpg",
-    },
-  },
-  {
-    id: 7,
-    name: "Red Velvet Cake",
-    description: "Cake",
-    price: 4.5,
-    image: {
-      thumbnail: "image-cake-thumbnail.jpg",
-    },
-  },
-  {
-    id: 8,
-    name: "Salted Caramel Brownie",
-    description: "Brownie",
-    price: 4.5,
-    image: {
-      thumbnail: "image-brownie-thumbnail.jpg",
-    },
-  },
-  {
-    id: 9,
-    name: "Vanilla Panna Cotta",
-    description: "Panna Cotta",
-    price: 6.5,
-    image: {
-      thumbnail: "image-panna-cotta-thumbnail.jpg",
-    },
-  },
-];
+const response = await fetch("./assets/json/data.json");
+
+if (!response.ok) {
+  throw new Error("fetch error");
+}
+
+const products = await response.json();
 
 const productsById = new Map(products.map((p) => [p.id, p]));
 

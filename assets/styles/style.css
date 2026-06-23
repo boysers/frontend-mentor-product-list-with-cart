@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "RedHat";
+  font-family: "Red Hat Text";
   src: url("./assets/fonts/RedHatText-VariableFont_wght.ttf");
 }
 
@@ -32,10 +32,6 @@ body {
 body.body--overflow-h {
   padding-right: 14px;
   overflow: hidden;
-}
-
-h1 {
-  display: none;
 }
 
 h2 {
@@ -186,10 +182,6 @@ b {
 .product-card__quantity-btn:hover::before {
   background-color: var(--rose-50);
 }
-.product-card__quantity-btn--increase {
-}
-.product-card__quantity-btn--decrease {
-}
 
 .cart {
   position: sticky;
@@ -256,10 +248,10 @@ b {
   padding-block: 1em;
   align-items: center;
   font-size: 0.875em;
+  row-gap: 0.5em;
 }
 .cart-item__title {
   margin: 0;
-  margin-bottom: 0.8em;
   font-size: 1em;
 }
 .cart-item__details {
@@ -423,14 +415,33 @@ b {
   font-size: 1.143em;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
+  .products__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 847px) {
+  .products__list {
+    grid-template-columns: 1fr;
+  }
+
+  .container {
+    padding: 1.5em;
+  }
+
+  .order-modal__content {
+    padding: 1.5em;
+  }
+}
+
+@media screen and (max-width: 702px) {
   body {
     grid-template-columns: 1fr;
   }
 
   .container {
     grid-template-columns: 1fr;
-    padding: 1.5em;
   }
 
   .products__list {
@@ -446,7 +457,6 @@ b {
   }
 
   .order-modal__content {
-    padding: 1.5em;
     border-radius: 12px 12px 0 0;
   }
 }
