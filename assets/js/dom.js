@@ -113,7 +113,7 @@ export const renderProductList = ({ products }) => {
                 "product-card__quantity-btn",
                 "product-card__quantity-btn--increase",
               ],
-              innerHTML: DECREASE_QUANTITY_ICON,
+              innerHTML: INCREASE_QUANTITY_ICON,
             }),
           ),
         ),
