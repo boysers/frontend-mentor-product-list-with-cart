@@ -5,7 +5,7 @@ import {
   renderShoppingCart,
   renderProductList,
 } from "./dom.js";
-import store, { addCart, removeCart, setCart } from "./store.js";
+import store, { addCart, subcribe, removeCart, setCart } from "./store.js";
 
 const response = await fetch("./assets/json/data.json");
 
@@ -18,15 +18,12 @@ const productsById = new Map(products.map((p) => [p.id, p]));
 
 const STORAGE_KEY = "shopping-cart";
 
-store.observers.push(
-  () => {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify([...store.cart.entries()]),
-    );
+const unsubscribe = subcribe(
+  ({ cart }) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...cart.entries()]));
   },
-  () => renderShoppingCart({ productsById }),
-  renderProductQuantity,
+  ({ cart }) => renderShoppingCart({ cart, productsById }),
+  ({ cart }) => renderProductQuantity({ cart }),
 );
 
 // Rerender product list (desserts)
@@ -65,7 +62,7 @@ const handlers = {
     removeCart(productId, true);
   },
   cart__submit: () => {
-    renderOrderConfirmed({ productsById });
+    renderOrderConfirmed({ productsById, cart: store.cart });
     document.querySelector(".order-modal__button")?.focus();
   },
   "order-modal__button": () => {

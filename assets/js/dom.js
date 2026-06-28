@@ -1,5 +1,3 @@
-import store from "./store.js";
-
 const shoppingCartEl = document.getElementById("shopping-cart");
 const modalEl = document.getElementById("modal");
 const productListEl = document.getElementById("product-list");
@@ -124,10 +122,10 @@ export const renderProductList = ({ products }) => {
   productListEl.replaceChildren(productListDocumentFragment);
 };
 
-export const renderProductQuantity = () => {
+export const renderProductQuantity = ({ cart }) => {
   document.querySelectorAll(`[data-product-quantity]`).forEach((el) => {
     const id = Number(el.dataset.productQuantity);
-    const qty = store.cart.get(id) ?? 0;
+    const qty = cart.get(id) ?? 0;
     el.textContent = qty;
 
     const productCard = el.closest(".product-card");
@@ -141,9 +139,9 @@ export const renderProductQuantity = () => {
   });
 };
 
-export const renderShoppingCart = ({ productsById }) => {
+export const renderShoppingCart = ({ productsById, cart }) => {
   let totalQuantity = 0;
-  for (const qty of store.cart.values()) {
+  for (const [_, qty] of cart) {
     totalQuantity += qty;
   }
 
@@ -156,7 +154,7 @@ export const renderShoppingCart = ({ productsById }) => {
 
   shoppingCartEl.append(shoppingCartQuantity);
 
-  if (store.cart.size === 0) {
+  if (cart.size === 0) {
     shoppingCartEl.append(
       createEl(
         "div",
@@ -178,7 +176,7 @@ export const renderShoppingCart = ({ productsById }) => {
   const listEl = createEl("ul", { classList: ["cart__list"] });
 
   let total = 0;
-  for (const [productId, qty] of store.cart) {
+  for (const [productId, qty] of cart) {
     const product = productsById.get(productId);
     if (!product) continue;
 
@@ -240,13 +238,13 @@ export const renderShoppingCart = ({ productsById }) => {
   shoppingCartEl.append(listEl, totalEl, submitButtonEl);
 };
 
-export const renderOrderConfirmed = ({ productsById }) => {
+export const renderOrderConfirmed = ({ productsById, cart }) => {
   const listEl = createEl("ul", { classList: ["order-modal__list"] });
 
   removeOrderConfirmed();
 
   let total = 0;
-  for (const [productId, qty] of store.cart) {
+  for (const [productId, qty] of cart) {
     const product = productsById.get(productId);
     if (!product) continue;
 
