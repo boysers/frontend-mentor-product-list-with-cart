@@ -1,3 +1,5 @@
+import { createEl, formatPrice } from "./helper.js";
+
 const shoppingCartEl = document.getElementById("shopping-cart");
 const modalEl = document.getElementById("modal");
 const productListEl = document.getElementById("product-list");
@@ -10,23 +12,6 @@ const DECREASE_QUANTITY_ICON =
 
 const INCREASE_QUANTITY_ICON =
   '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"><path fill="#fff" d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"></path></svg>';
-
-const createEl = (tag, props = {}, ...children) => {
-  const el = document.createElement(tag);
-
-  if (props) {
-    const { dataset, classList, ...rest } = props;
-
-    Object.assign(el, rest);
-
-    dataset && Object.assign(el.dataset, dataset);
-    classList && el.classList.add(...classList);
-  }
-
-  el.append(...children);
-
-  return el;
-};
 
 export const renderProductList = ({ products }) => {
   const productListDocumentFragment = document.createDocumentFragment();
@@ -66,7 +51,7 @@ export const renderProductList = ({ products }) => {
           }),
           createEl("b", {
             classList: ["product-card__price"],
-            textContent: `${product.price.toFixed(2).replace(".", ",")} €`,
+            textContent: formatPrice(product.price),
           }),
         ),
         createEl(
@@ -199,11 +184,11 @@ export const renderShoppingCart = ({ productsById, cart }) => {
           }),
           createEl("small", { textContent: " @ " }),
           createEl("span", {
-            textContent: `${product.price.toFixed(2).replace(".", ",")} € `,
+            textContent: formatPrice(product.price),
             classList: ["cart-item__unit-price"],
           }),
           createEl("strong", {
-            textContent: `${(product.price * qty).toFixed(2).replace(".", ",")} €`,
+            textContent: formatPrice(product.price * qty),
             classList: ["cart-item__total"],
           }),
         ),
@@ -225,7 +210,7 @@ export const renderShoppingCart = ({ productsById, cart }) => {
       classList: ["cart__label"],
     }),
     createEl("big", {
-      textContent: `${total.toFixed(2).replace(".", ",")} €`,
+      textContent: formatPrice(total),
       classList: ["cart__total"],
     }),
   );
@@ -272,12 +257,12 @@ export const renderOrderConfirmed = ({ productsById, cart }) => {
           }),
           createEl("small", { textContent: " @ " }),
           createEl("span", {
-            textContent: `${product.price.toFixed(2).replace(".", ",")} € `,
+            textContent: formatPrice(product.price),
             classList: ["order-item__unit-price"],
           }),
         ),
         createEl("strong", {
-          textContent: `${(product.price * qty).toFixed(2).replace(".", ",")} €`,
+          textContent: formatPrice(product.price * qty),
           classList: ["order-item__total"],
         }),
       ),
@@ -313,7 +298,7 @@ export const renderOrderConfirmed = ({ productsById, cart }) => {
             classList: ["order-modal__label"],
           }),
           createEl("big", {
-            textContent: `${total.toFixed(2).replace(".", ",")} €`,
+            textContent: formatPrice(total),
             classList: ["order-modal__total"],
           }),
         ),
