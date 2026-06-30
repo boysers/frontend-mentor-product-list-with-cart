@@ -5,7 +5,15 @@ import {
   renderShoppingCart,
   renderProductList,
 } from "./dom.js";
-import store, { addCart, subcribe, removeCart, setCart } from "./store.js";
+import store, {
+  addCart,
+  subcribe,
+  removeCart,
+  setCart,
+  subscribe,
+  getQuantity,
+  getTotalQuantity,
+} from "./store.js";
 
 const response = await fetch("./assets/json/data.json");
 
@@ -18,13 +26,27 @@ const productsById = new Map(products.map((p) => [p.id, p]));
 
 const STORAGE_KEY = "shopping-cart";
 
-const unsubscribe = subcribe(
-  ({ cart }) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([...cart.entries()]));
-  },
-  ({ cart }) => renderShoppingCart({ cart, productsById }),
-  renderProductQuantity,
+subscribe(
+  (state) => JSON.stringify([...state.cart.entries()]),
+  (value) => localStorage.setItem(STORAGE_KEY, value),
 );
+
+subscribe(
+  (state) => state.cart,
+  (cart) =>
+    renderShoppingCart({
+      cart,
+      productsById,
+      totalQuantity: getTotalQuantity(store),
+    }),
+);
+
+for (const product of products) {
+  subscribe(
+    (state) => getQuantity(state, product.id),
+    (qty) => renderProductQuantity(product.id, qty),
+  );
+}
 
 // Rerender product list (desserts)
 renderProductList({ products });
@@ -62,7 +84,10 @@ const handlers = {
     removeCart(productId, true);
   },
   cart__submit: () => {
-    renderOrderConfirmed({ productsById, cart: store.cart });
+    renderOrderConfirmed({
+      productsById,
+      cart: getCart(store),
+    });
     document.querySelector(".order-modal__button")?.focus();
   },
   "order-modal__button": () => {

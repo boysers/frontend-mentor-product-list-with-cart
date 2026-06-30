@@ -1,5 +1,4 @@
 import { createEl, formatPrice } from "./helper.js";
-import { getQuantity, getTotalQuantity } from "./store.js";
 
 const shoppingCartEl = document.getElementById("shopping-cart");
 const modalEl = document.getElementById("modal");
@@ -108,29 +107,25 @@ export const renderProductList = ({ products }) => {
   productListEl.replaceChildren(productListDocumentFragment);
 };
 
-export const renderProductQuantity = () => {
-  document.querySelectorAll(`[data-product-quantity]`).forEach((el) => {
-    const id = Number(el.dataset.productQuantity);
-    const qty = getQuantity(id);
+export const renderProductQuantity = (id, qty) => {
+  const el = document.querySelector(`[data-product-quantity="${id}"]`);
+  if (!el) return;
 
-    el.textContent = qty;
+  const productId = Number(el.dataset.productQuantity);
 
-    const productCard = el.closest(".product-card");
-    if (!productCard) return;
+  el.textContent = qty;
 
-    if (qty > 0) {
-      productCard.classList.add("product-card--selected");
-    } else {
-      productCard.classList.remove("product-card--selected");
-    }
-  });
+  el.closest(".product-card")?.classList.toggle(
+    "product-card--selected",
+    qty > 0,
+  );
 };
 
-export const renderShoppingCart = ({ productsById, cart }) => {
+export const renderShoppingCart = ({ productsById, cart, totalQuantity }) => {
   shoppingCartEl.replaceChildren();
 
   const shoppingCartQuantity = createEl("h2", {
-    textContent: `Your Cart (${getTotalQuantity()})`,
+    textContent: `Your Cart (${totalQuantity})`,
     classList: ["cart__title"],
   });
 
