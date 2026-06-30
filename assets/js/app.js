@@ -7,12 +7,13 @@ import {
 } from "./dom.js";
 import store, {
   addCart,
-  subcribe,
   removeCart,
   setCart,
   subscribe,
   getQuantity,
   getTotalQuantity,
+  getCart,
+  getCartTotal,
 } from "./store.js";
 
 const response = await fetch("./assets/json/data.json");
@@ -26,31 +27,36 @@ const productsById = new Map(products.map((p) => [p.id, p]));
 
 const STORAGE_KEY = "shopping-cart";
 
+// Persist cart
 subscribe(
   (state) => JSON.stringify([...state.cart.entries()]),
   (value) => localStorage.setItem(STORAGE_KEY, value),
 );
 
+// Render cart
 subscribe(
   (state) => state.cart,
   (cart) =>
     renderShoppingCart({
       cart,
       productsById,
-      totalQuantity: getTotalQuantity(store),
+      totalQuantity: getTotalQuantity(cart),
+      total: getCartTotal(cart, productsById),
     }),
 );
 
+// Render per-product quantity
 for (const product of products) {
   subscribe(
-    (state) => getQuantity(state, product.id),
+    (state) => getQuantity(state.cart, product.id),
     (qty) => renderProductQuantity(product.id, qty),
   );
 }
 
-// Rerender product list (desserts)
+// Render product list (desserts)
 renderProductList({ products });
 
+// Hydrate cart from localStorage
 try {
   const cart = localStorage.getItem(STORAGE_KEY);
   cart && setCart(JSON.parse(cart));
@@ -58,13 +64,15 @@ try {
   console.error("shopping cart error :", error);
 }
 
-// ########## Events ##########
+/* =========================
+   EVENTS (data-action based)
+========================= */
 
-const handlers = {
-  "product-card__quantity-btn--increase": ({ productId }) => {
+const actions = {
+  "increase-quantity": ({ productId }) => {
     addCart(productsById.get(productId));
   },
-  "product-card__quantity-btn--decrease": ({ button, productId }) => {
+  "decrease-quantity": ({ button, productId }) => {
     removeCart(productId);
 
     button
@@ -72,7 +80,7 @@ const handlers = {
       ?.querySelector(".product-card__add-btn")
       ?.focus();
   },
-  "product-card__add-btn": ({ button, productId }) => {
+  "add-to-cart": ({ button, productId }) => {
     addCart(productsById.get(productId));
 
     const actionsEl = button
@@ -80,17 +88,21 @@ const handlers = {
       ?.querySelector(".product-card__quantity-btn--increase")
       ?.focus();
   },
-  "cart-item__remove-btn": ({ productId }) => {
+  "remove-cart-item": ({ productId }) => {
     removeCart(productId, true);
   },
-  cart__submit: () => {
+  "submit-cart": () => {
+    const cart = getCart(store);
+
     renderOrderConfirmed({
       productsById,
-      cart: getCart(store),
+      cart,
+      total: getCartTotal(cart, productsById),
     });
+
     document.querySelector(".order-modal__button")?.focus();
   },
-  "order-modal__button": () => {
+  "close-order-modal": () => {
     removeOrderConfirmed();
     setCart();
     document.querySelector(".product-card__add-btn")?.focus();
@@ -98,13 +110,11 @@ const handlers = {
 };
 
 document.addEventListener("click", (e) => {
-  const button = e.target.closest("button");
+  const el = e.target.closest("[data-action]");
+  if (!el) return;
 
-  if (!button) return;
+  const actionName = el.dataset.action;
+  const fn = actions[actionName];
 
-  const handler = Object.entries(handlers).find(([className]) =>
-    button.classList.contains(className),
-  )?.[1];
-
-  handler && handler({ button, productId: Number(button.dataset.productId) });
+  fn && fn({ button: el, productId: Number(el.dataset.productId) });
 });

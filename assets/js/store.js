@@ -14,14 +14,6 @@ const notify = () => {
   }
 };
 
-export const subcribe = (...callbacks) => {
-  callbacks.forEach((cb) => observers.add(cb));
-
-  return () => {
-    callbacks.forEach((cb) => observers.delete(cb));
-  };
-};
-
 export const subscribe = (selector, listener) => {
   let previous = selector(store);
 
@@ -77,18 +69,31 @@ export const removeCart = (productId, all = false) => {
   notify();
 };
 
-export const getQuantity = (state, id) => state.cart.get(id) ?? 0;
+export const getCart = (state) => state.cart;
 
-export const getTotalQuantity = (state) => {
+export const getQuantity = (cart, id) => cart.get(id) ?? 0;
+
+export const getTotalQuantity = (cart) => {
   let total = 0;
 
-  for (const qty of state.cart.values()) {
+  for (const qty of cart.values()) {
     total += qty;
   }
 
   return total;
 };
 
-export const getCart = (state) => state.cart;
+export const getCartTotal = (cart, productsById) => {
+  let total = 0;
+
+  for (const [productId, qty] of cart) {
+    const product = productsById.get(productId);
+    if (!product) continue;
+
+    total += product.price * qty;
+  }
+
+  return total;
+};
 
 export default store;

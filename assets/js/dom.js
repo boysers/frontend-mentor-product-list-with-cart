@@ -61,7 +61,7 @@ export const renderProductList = ({ products }) => {
             "button",
             {
               type: "button",
-              dataset: { productId: product.id },
+              dataset: { productId: product.id, action: "add-to-cart" },
               classList: ["product-card__add-btn"],
             },
             createEl("img", {
@@ -76,7 +76,7 @@ export const renderProductList = ({ products }) => {
             createEl("button", {
               type: "button",
               ariaLabel: "Decrease quantity",
-              dataset: { productId: product.id },
+              dataset: { productId: product.id, action: "decrease-quantity" },
               classList: [
                 "product-card__quantity-btn",
                 "product-card__quantity-btn--decrease",
@@ -91,7 +91,7 @@ export const renderProductList = ({ products }) => {
             createEl("button", {
               type: "button",
               ariaLabel: "Decrease quantity",
-              dataset: { productId: product.id },
+              dataset: { productId: product.id, action: "increase-quantity" },
               classList: [
                 "product-card__quantity-btn",
                 "product-card__quantity-btn--increase",
@@ -121,7 +121,12 @@ export const renderProductQuantity = (id, qty) => {
   );
 };
 
-export const renderShoppingCart = ({ productsById, cart, totalQuantity }) => {
+export const renderShoppingCart = ({
+  productsById,
+  cart,
+  totalQuantity,
+  total,
+}) => {
   shoppingCartEl.replaceChildren();
 
   const shoppingCartQuantity = createEl("h2", {
@@ -152,12 +157,11 @@ export const renderShoppingCart = ({ productsById, cart, totalQuantity }) => {
 
   const listEl = createEl("ul", { classList: ["cart__list"] });
 
-  let total = 0;
   for (const [productId, qty] of cart) {
     const product = productsById.get(productId);
     if (!product) continue;
 
-    total += product.price * qty;
+    const lineTotal = product.price * qty;
 
     listEl.appendChild(
       createEl(
@@ -180,12 +184,12 @@ export const renderShoppingCart = ({ productsById, cart, totalQuantity }) => {
             classList: ["cart-item__unit-price"],
           }),
           createEl("strong", {
-            textContent: formatPrice(product.price * qty),
+            textContent: formatPrice(lineTotal),
             classList: ["cart-item__total"],
           }),
         ),
         createEl("button", {
-          dataset: { productId: product.id },
+          dataset: { productId: product.id, action: "remove-cart-item" },
           classList: ["cart-item__remove-btn"],
           ariaLabel: `Remove ${product.name} from cart`,
           innerHTML: REMOVE_ITEM_ICON,
@@ -208,6 +212,7 @@ export const renderShoppingCart = ({ productsById, cart, totalQuantity }) => {
   );
 
   const submitButtonEl = createEl("button", {
+    dataset: { action: "submit-cart" },
     classList: ["cart__submit"],
     textContent: "Confirm Order",
   });
@@ -215,17 +220,16 @@ export const renderShoppingCart = ({ productsById, cart, totalQuantity }) => {
   shoppingCartEl.append(listEl, totalEl, submitButtonEl);
 };
 
-export const renderOrderConfirmed = ({ productsById, cart }) => {
+export const renderOrderConfirmed = ({ productsById, cart, total }) => {
   const listEl = createEl("ul", { classList: ["order-modal__list"] });
 
   removeOrderConfirmed();
 
-  let total = 0;
   for (const [productId, qty] of cart) {
     const product = productsById.get(productId);
     if (!product) continue;
 
-    total += product.price * qty;
+    const lineTotal = product.price * qty;
 
     listEl.appendChild(
       createEl(
@@ -254,7 +258,7 @@ export const renderOrderConfirmed = ({ productsById, cart }) => {
           }),
         ),
         createEl("strong", {
-          textContent: formatPrice(product.price * qty),
+          textContent: formatPrice(lineTotal),
           classList: ["order-item__total"],
         }),
       ),
@@ -295,8 +299,9 @@ export const renderOrderConfirmed = ({ productsById, cart }) => {
           }),
         ),
         createEl("button", {
-          textContent: "Start New Order",
+          dataset: { action: "close-order-modal" },
           classList: ["order-modal__button"],
+          textContent: "Start New Order",
         }),
       ),
     ),
