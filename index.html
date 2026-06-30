@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -821,7 +821,21 @@
       </aside>
     </div>
 
-    <div id="modal" class="order-modal"></div>
+    <div
+      id="modal"
+      class="order-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="order-title"
+      aria-describedby="order-desc"
+    ></div>
+
+    <div
+      id="cart-announcer"
+      class="sr-only"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
 
     <script type="module" src="./assets/js/app.js"></script>
   </body>

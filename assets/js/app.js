@@ -1,11 +1,13 @@
 import {
-  removeOrderConfirmed,
+  closeOrderModal,
   renderOrderConfirmed,
   renderProductQuantity,
   renderShoppingCart,
   renderProductList,
+  announceCartUpdate,
+  openOrderModal,
 } from "./dom.js";
-import store, {
+import {
   addCart,
   removeCart,
   setCart,
@@ -44,6 +46,7 @@ subscribe(
       total: getCartTotal(cart, productsById),
     }),
 );
+subscribe((state) => getTotalQuantity(state.cart), announceCartUpdate);
 
 // Render per-product quantity
 for (const product of products) {
@@ -72,18 +75,18 @@ const actions = {
   "increase-quantity": ({ productId }) => {
     addCart(productsById.get(productId));
   },
-  "decrease-quantity": ({ button, productId }) => {
+  "decrease-quantity": ({ element, productId }) => {
     removeCart(productId);
 
-    button
+    element
       .closest(".product-card__actions")
       ?.querySelector(".product-card__add-btn")
       ?.focus();
   },
-  "add-to-cart": ({ button, productId }) => {
+  "add-to-cart": ({ element, productId }) => {
     addCart(productsById.get(productId));
 
-    const actionsEl = button
+    const actionsEl = element
       .closest(".product-card__actions")
       ?.querySelector(".product-card__quantity-btn--increase")
       ?.focus();
@@ -92,7 +95,7 @@ const actions = {
     removeCart(productId, true);
   },
   "submit-cart": () => {
-    const cart = getCart(store);
+    const cart = getCart();
 
     renderOrderConfirmed({
       productsById,
@@ -100,12 +103,12 @@ const actions = {
       total: getCartTotal(cart, productsById),
     });
 
-    document.querySelector(".order-modal__button")?.focus();
+    openOrderModal();
+
+    setCart();
   },
   "close-order-modal": () => {
-    removeOrderConfirmed();
-    setCart();
-    document.querySelector(".product-card__add-btn")?.focus();
+    closeOrderModal();
   },
 };
 
@@ -116,5 +119,11 @@ document.addEventListener("click", (e) => {
   const actionName = el.dataset.action;
   const fn = actions[actionName];
 
-  fn && fn({ button: el, productId: Number(el.dataset.productId) });
+  fn && fn({ element: el, productId: Number(el.dataset.productId) });
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeOrderModal();
+  }
 });

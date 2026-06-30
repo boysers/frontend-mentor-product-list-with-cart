@@ -69,7 +69,7 @@ export const removeCart = (productId, all = false) => {
   notify();
 };
 
-export const getCart = (state) => state.cart;
+export const getCart = () => new Map(store.cart);
 
 export const getQuantity = (cart, id) => cart.get(id) ?? 0;
 
@@ -95,5 +95,3 @@ export const getCartTotal = (cart, productsById) => {
 
   return total;
 };
-
-export default store;

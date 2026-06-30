@@ -3,15 +3,16 @@ import { createEl, formatPrice } from "./helper.js";
 const shoppingCartEl = document.getElementById("shopping-cart");
 const modalEl = document.getElementById("modal");
 const productListEl = document.getElementById("product-list");
+const cartAnnouncerEl = document.getElementById("cart-announcer");
 
 const REMOVE_ITEM_ICON =
   '<svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"><path fill="#CAAFA7" d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z"/></svg>';
 
 const DECREASE_QUANTITY_ICON =
-  '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="10" height="2" fill="none" viewBox="0 0 10 2"><path fill="#fff" d="M0 .375h10v1.25H0V.375Z"></path></svg>';
+  '<svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="10" height="2" fill="none" viewBox="0 0 10 2"><path fill="#fff" d="M0 .375h10v1.25H0V.375Z"></path></svg>';
 
 const INCREASE_QUANTITY_ICON =
-  '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"><path fill="#fff" d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"></path></svg>';
+  '<svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"><path fill="#fff" d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"></path></svg>';
 
 export const renderProductList = ({ products }) => {
   const productListDocumentFragment = document.createDocumentFragment();
@@ -90,7 +91,7 @@ export const renderProductList = ({ products }) => {
             }),
             createEl("button", {
               type: "button",
-              ariaLabel: "Decrease quantity",
+              ariaLabel: "Increase quantity",
               dataset: { productId: product.id, action: "increase-quantity" },
               classList: [
                 "product-card__quantity-btn",
@@ -217,13 +218,32 @@ export const renderShoppingCart = ({
     textContent: "Confirm Order",
   });
 
-  shoppingCartEl.append(listEl, totalEl, submitButtonEl);
+  shoppingCartEl.append(
+    listEl,
+    totalEl,
+    createEl(
+      "p",
+      { classList: ["cart__carbon"] },
+      createEl("img", {
+        src: "./assets/images/icon-carbon-neutral.svg",
+        alt: "carbon neutral",
+      }),
+      "This is a ",
+      createEl("strong", { textContent: "carbon-neutral" }),
+      " delivery",
+    ),
+    submitButtonEl,
+  );
+};
+
+export const announceCartUpdate = (totalQty) => {
+  if (cartAnnouncerEl) {
+    cartAnnouncerEl.textContent = `Cart updated. ${totalQty} item${totalQty > 1 ? "s" : ""}`;
+  }
 };
 
 export const renderOrderConfirmed = ({ productsById, cart, total }) => {
   const listEl = createEl("ul", { classList: ["order-modal__list"] });
-
-  removeOrderConfirmed();
 
   for (const [productId, qty] of cart) {
     const product = productsById.get(productId);
@@ -278,10 +298,12 @@ export const renderOrderConfirmed = ({ productsById, cart, total }) => {
           classList: ["order-modal__icon"],
         }),
         createEl("h2", {
+          id: "order-title",
           textContent: "Order Confirmed",
           classList: ["order-modal__title"],
         }),
         createEl("p", {
+          id: "order-desc",
           textContent: "We hope you enjoy your food!",
           classList: ["order-modal__subtitle"],
         }),
@@ -306,13 +328,19 @@ export const renderOrderConfirmed = ({ productsById, cart, total }) => {
       ),
     ),
   );
-
-  modalEl.classList.add("order-modal--open");
-  document.body.classList.add("body--overflow-h");
 };
 
-export const removeOrderConfirmed = () => {
+export const openOrderModal = () => {
+  modalEl.classList.add("order-modal--open");
+  document.body.classList.add("body--overflow-h");
+
+  modalEl.querySelector("button")?.focus();
+};
+
+export const closeOrderModal = () => {
   modalEl.replaceChildren();
   modalEl.classList.remove("order-modal--open");
   document.body.classList.remove("body--overflow-h");
+
+  document.querySelector('[data-action="add-to-cart"')?.focus();
 };
