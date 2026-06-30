@@ -1,4 +1,5 @@
 import { createEl, formatPrice } from "./helper.js";
+import { getQuantity, getTotalQuantity } from "./store.js";
 
 const shoppingCartEl = document.getElementById("shopping-cart");
 const modalEl = document.getElementById("modal");
@@ -107,10 +108,11 @@ export const renderProductList = ({ products }) => {
   productListEl.replaceChildren(productListDocumentFragment);
 };
 
-export const renderProductQuantity = ({ cart }) => {
+export const renderProductQuantity = () => {
   document.querySelectorAll(`[data-product-quantity]`).forEach((el) => {
     const id = Number(el.dataset.productQuantity);
-    const qty = cart.get(id) ?? 0;
+    const qty = getQuantity(id);
+
     el.textContent = qty;
 
     const productCard = el.closest(".product-card");
@@ -125,15 +127,10 @@ export const renderProductQuantity = ({ cart }) => {
 };
 
 export const renderShoppingCart = ({ productsById, cart }) => {
-  let totalQuantity = 0;
-  for (const [_, qty] of cart) {
-    totalQuantity += qty;
-  }
-
   shoppingCartEl.replaceChildren();
 
   const shoppingCartQuantity = createEl("h2", {
-    textContent: `Your Cart (${totalQuantity})`,
+    textContent: `Your Cart (${getTotalQuantity()})`,
     classList: ["cart__title"],
   });
 

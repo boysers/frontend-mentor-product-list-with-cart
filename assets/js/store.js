@@ -50,4 +50,16 @@ export const removeCart = (productId, all = false) => {
   notify();
 };
 
+export const getQuantity = (id) => store.cart.get(id) ?? 0;
+
+export const getTotalQuantity = () => {
+  let total = 0;
+
+  for (const qty of store.cart.values()) {
+    total += qty;
+  }
+
+  return total;
+};
+
 export default store;

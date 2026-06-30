@@ -23,7 +23,7 @@ const unsubscribe = subcribe(
     localStorage.setItem(STORAGE_KEY, JSON.stringify([...cart.entries()]));
   },
   ({ cart }) => renderShoppingCart({ cart, productsById }),
-  ({ cart }) => renderProductQuantity({ cart }),
+  renderProductQuantity,
 );
 
 // Rerender product list (desserts)
