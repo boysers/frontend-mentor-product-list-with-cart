@@ -342,5 +342,5 @@ export const closeOrderModal = () => {
   modalEl.classList.remove("order-modal--open");
   document.body.classList.remove("body--overflow-h");
 
-  document.querySelector('[data-action="add-to-cart"')?.focus();
+  document.querySelector('[data-action="add-to-cart"]')?.focus();
 };
